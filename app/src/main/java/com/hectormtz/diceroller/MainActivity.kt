@@ -12,13 +12,15 @@ class MainActivity : AppCompatActivity() {
 
         val rollButton: Button = findViewById(R.id.button)
         rollButton.setOnClickListener {
-            rollDice(R.id.imageView)
+            rollDice(R.id.dice1)
+            rollDice(R.id.dice2)
         }
 
-        rollDice()
+        rollDice(R.id.dice1)
+        rollDice(R.id.dice2)
     }
 
-    private fun rollDice(num: Int = R.id.imageView) {
+    private fun rollDice(num: Int = R.id.dice1) {
         val dice = Dice(6)
         val diceRoll = dice.roll()
         val diceImage: ImageView = findViewById(num)
