@@ -2,7 +2,7 @@ package com.hectormtz.diceroller
 
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -12,16 +12,28 @@ class MainActivity : AppCompatActivity() {
 
         val rollButton: Button = findViewById(R.id.button)
         rollButton.setOnClickListener {
-            rollDice(R.id.dice1)
-            rollDice(R.id.dice2)
+            rollDice(R.id.imageView)
         }
+
+        rollDice()
     }
 
-    private fun rollDice(num: Int) {
+    private fun rollDice(num: Int = R.id.imageView) {
         val dice = Dice(6)
         val diceRoll = dice.roll()
-        val resultTextView: TextView = findViewById(num)
-        resultTextView.text = diceRoll.toString()
+        val diceImage: ImageView = findViewById(num)
+
+        val drawableResource = when (diceRoll) {
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            else -> R.drawable.dice_6
+        }
+
+        diceImage.setImageResource(drawableResource)
+        diceImage.contentDescription = diceRoll.toString()
     }
 }
 
