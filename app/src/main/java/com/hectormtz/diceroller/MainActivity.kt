@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.concurrent.thread
 
 private const val TAG = "MainActivity"
 
@@ -13,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         logging()
+        division()
 
         val rollButton: Button = findViewById(R.id.button)
         rollButton.setOnClickListener {
@@ -40,8 +43,27 @@ class MainActivity : AppCompatActivity() {
 
         diceImage.setImageResource(drawableResource)
         diceImage.contentDescription = diceRoll.toString()
+
+    }
+
+    fun division() {
+        val numerator = 60
+        var denominator = 4
+        thread (start = true) {
+            repeat(4) {
+                Thread.sleep(4000L)
+                Log.d(TAG, "$denominator")
+                Log.v(TAG, "${numerator / denominator}")
+                runOnUiThread {
+                    findViewById<TextView>(R.id.division).setText("${numerator / denominator}")
+                    denominator--
+                }
+            }
+        }
+
     }
 }
+
 fun logging() {
     Log.e(TAG, "ERROR: a serious error like an app crash")
     Log.w(TAG, "WARN: warns about the potential for serious errors")
